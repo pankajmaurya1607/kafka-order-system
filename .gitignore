@@ -1,0 +1,15 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment & local settings
+.env
+*.tmp
+
+# Go binaries & build output
+/bin/
+*.exe
+*.out
+
+# Docker / local data mounts
+data/
