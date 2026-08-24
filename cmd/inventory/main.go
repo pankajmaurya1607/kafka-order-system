@@ -12,11 +12,11 @@ import (
 )
 
 func main() {
-	
-	reader := KafkaGo.NewReader(KafkaGo.ReaderConfig {
-		Brokers: 	[]string{"localhost:9092"},
-		Topic: 		"orders-created",
-		GroupID: 	"inventory-group",
+
+	reader := KafkaGo.NewReader(KafkaGo.ReaderConfig{
+		Brokers: []string{"localhost:9092"},
+		Topic:   "orders.created",
+		GroupID: "inventory-group",
 	})
 
 	defer reader.Close()
@@ -28,13 +28,13 @@ func main() {
 
 		if err != nil {
 			log.Printf("error reading message: %v", err)
-			return 
+			return
 		}
 
 		var event models.OrderCreateEvent
 
 		if err := json.Unmarshal(message.Value, &event); err != nil {
-			log.Printf("invlid event: %v", err)
+			log.Printf("invalid event: %v", err)
 			continue
 		}
 
@@ -48,12 +48,11 @@ func main() {
 		err = writeInventoryLog(event)
 
 		if err != nil {
-			log.Printf("failed inventory processing: % v", err)
+			log.Printf("failed inventory processing: %v", err)
 			continue
 		}
 	}
 }
-
 
 func writeInventoryLog(event models.OrderCreateEvent) error {
 	file, err := os.OpenFile(

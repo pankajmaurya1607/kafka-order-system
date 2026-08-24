@@ -14,7 +14,7 @@ func main() {
 
 	reader := KafkaGo.NewReader(KafkaGo.ReaderConfig{
 		Brokers: []string{"localhost:9092"},
-		Topic:   "order-created",
+		Topic:   "orders.created",
 		GroupID: "notification-group",
 	})
 
